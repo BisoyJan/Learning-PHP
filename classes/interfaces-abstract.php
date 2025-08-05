@@ -2,8 +2,8 @@
 
 interface PaymentProcessor
 {
-    public function processPayment(float $amount): bool;
-    public function refundPayment(float $amount): bool;
+    public function processPayment(float | int $amount): bool;
+    public function refundPayment(float | int $amount): bool;
 }
 
 // Limitations of abstract class are can only extend one single class, while they can implement multiple interfaces.
@@ -18,10 +18,10 @@ abstract class OnlinePaymentProcessor implements PaymentProcessor
     public function __construct(protected string $apiKey) {}
 
     abstract protected function validateApiKey(): bool;
-    abstract protected function executePayment(float $amount): bool;
-    abstract protected function executeRefund(float $amount): bool;
+    abstract protected function executePayment(float | int $amount): bool;
+    abstract protected function executeRefund(float | int $amount): bool;
 
-    public function processPayment(float $amount): bool
+    public function processPayment(float | int $amount): bool
     {
         if (!$this->validateApiKey()) {
             throw new Exception("Invalid API Key");
